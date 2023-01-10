@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page_content %}
+
+<h1>Favourite boards</h1>
+<link href="{% static 'board_index_css.css' %}" rel="stylesheet" type="text/css">
+<script src="{% static 'board_index_js.js' %}"></script>
+
+
+<div class="cards">
+{% for post in favourite_posts %}
+  <div class="card">
+    <div class="card__image-holder">
+
+    </div>
+    <div class="card-title">
+      <a href="{% url 'delete_board' post.pk %}" class="toggle-info btn">
+        <span class="left"></span>
+        <span class="right"></span>
+      </a>
+
+      <h2>
+          {{ board.title }}
+      </h2>
+        <div class="card-actions">
+                <a href="{% url 'board_detail' post.pk %}" class="btn">Open</a>
+            </div>
+
+
+    </div>
+    <div class="card-flap flap1">
+
+      <div class="card-flap flap2">
+
+
+      </div>
+    </div>
+  </div>
+    {% empty %}
+
+    <h1>No Favourite boards</h1>
+
+    {% endfor %}
+
+{% endblock %}

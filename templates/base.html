@@ -1,0 +1,64 @@
+<!--users/templates/base.html-->
+{% load static %}
+
+<head>
+    <link href="{% static 'base_css.css' %}" rel="stylesheet" type="text/css">
+    <title>Trello</title>
+    <script type="text/javascript" src="{% static 'base_js.js' %}"></script>
+</head>
+<body>
+<nav class="navbar">
+  <div class="container">
+
+    <div class="navbar-header">
+      <button class="navbar-toggler" data-toggle="open-navbar1">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <a href="#">
+        <h1><span>Trello</span></h1>
+      </a>
+    </div>
+
+    <div class="navbar-menu" id="open-navbar1">
+      <ul class="navbar-nav">
+        <li class="active"><a href="{% url 'dashboard' %}">Home</a></li>
+        </li>
+        <li><a href="{% url 'login' %}"></a></li>
+    {% if user.is_authenticated %}
+          <li><a href="{% url 'board_index' %}">Boards</a></li>
+                    <li><a href="{% url 'favourite_list' %}">Favourite_boards</a></li>
+
+                    <li><a href="{% url 'archive_list' %}">Archive</a></li>
+
+
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+
+    {% else %}
+          <li><a href="{% url 'login' %}">Signin</a></li>
+    {% endif %}
+
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+</body>
+
+<style>
+    label, input {
+        display: block;
+    }
+    span.helptext {
+        display: none;
+    }
+
+</style>
+
+{% block content %}
+{% endblock %}
+{% block page_content %}
+{% endblock %}
+

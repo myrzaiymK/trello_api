@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_content %}
+<h1>{{ card.title }}</h1>
+
+<header>
+<!--    <link href="{% static 'card.css' %}" rel="stylesheet" type="text/css">-->
+
+</header>
+
+<div class="row">
+    <div class="col-md-8">
+        <img src="{% static project.image %}" alt="" width="100%">
+    </div>
+    <div class="col-md-4">
+        <p>{{ card.description }}</p>
+        <br>
+
+    </div>
+    <div class="col-md-4">
+        <p>{{ card.members.all }}</p>
+        <br>
+
+
+
+
+</div>
+    <div class="col-md-4">
+        <p>{{ card.label }}</p>
+        <br>
+    </div>
+
+     <div class="col-md-4">
+        <br>
+    </div>
+
+<button class="Xvtk19CKfgvpGV EgMsQKz0nQapAX XSswPpKwyTXMh5" tabindex="0" aria-label="Цвет: Зелёная, название: «без цвета»" data-color="green" data-test-id="card-label"></button>
+
+
+    <button class="custom-btn btn-4"><span>
+        <a href="{% url 'card_delete' card.pk %}">delete</a>
+    </span></button>
+<button class="custom-btn btn-4"><span>
+        <a href="{% url 'card-update' card.pk %}">update</a>
+    </span></button>
+
+<button class="custom-btn btn-4"><span>
+        <a href="{% url 'create_label' %}">label</a>
+    </span></button>
+
+
+
+<div class="col-md-8 card mb-4  mt-3 ">
+    <div class="card-body">
+        <!-- comments -->
+        <h2>{{ comments.count }} comments</h2>
+
+        {% for comment in comments %}
+        <div class="comments" style="padding: 10px;">
+            <p class="font-weight-bold">
+                {{ comment.author }}
+                <span class=" text-muted font-weight-normal">
+              {{ comment.created_on }}
+            </span>
+            </p>
+            {{ comment.body | linebreaks }}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<div class="col-md-8 card mb-4  mt-3 ">
+    <div class="card-body">
+        {% if new_comment %}
+        <div class="alert alert-success" role="alert">
+            Your comment is awaiting moderation
+        </div>
+        {% else %}
+        <h3>Leave a comment</h3>
+        <form method="post" style="margin-top: 1.3em;">
+            {{ comment_form.as_p }}
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary  btn-lg">Submit</button>
+        </form>
+        {% endif %}
+    </div>
+</div>
+{% for comment in comments %}
+<p>
+    On {{comment.created_on }}&nbsp;
+    <b>{{ comment.author }}</b> wrote:
+</p>
+<p>{{ comment.body }}</p>
+<hr>
+{% endfor %}
+
+
+{% endblock %}
+
+
+

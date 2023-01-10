@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_content %}
+
+<head>
+    <link href="{% static 'board_detail.css' %}" rel="stylesheet" type="text/css">
+    <link rel=”stylesheet” href=”https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css”rel=”nofollow”
+          integrity=”sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm” crossorigin=”anonymous”>
+    <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
+    <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
+
+</head>
+
+
+<header class="masthead">
+
+    <div class="boards-menu">
+
+        <button class="boards-btn btn"><i class="fab fa-trello boards-btn-icon"></i>Boards</button>
+
+        <div class="board-search">
+            <input type="search" class="board-search-input" aria-label="Board Search">
+            <i class="fas fa-search search-icon" aria-hidden="true"></i>
+        </div>
+
+    </div>
+
+    <div class="logo">
+
+        <h1><i class="fab fa-trello logo-icon" aria-hidden="true"></i>Trello</h1>
+
+    </div>
+
+    <div class="user-settings">
+
+        <button class="user-settings-btn btn" aria-label="Create">
+            <i class="fas fa-plus" aria-hidden="true"></i>
+        </button>
+
+        <button class="user-settings-btn btn" aria-label="Information">
+            <i class="fas fa-info-circle" aria-hidden="true"></i>
+        </button>
+
+        <button class="user-settings-btn btn" aria-label="Notifications">
+            <i class="fas fa-bell" aria-hidden="true"></i>
+        </button>
+
+        <button class="user-settings-btn btn" aria-label="User Settings">
+            <a href="{% url 'create_label' %}"><i class="fas fa-user-circle" aria-hidden="true"></i></a>
+        </button>
+
+    </div>
+
+</header>
+<!-- End of masthead -->
+
+
+<!-- Board info bar -->
+
+
+<section class="board-info-bar">
+
+    <div class="board-controls">
+
+        <button class="board-title btn">
+            <h2>Web Development</h2>
+        </button>
+
+        <button class="star-btn btn" aria-label="Star Board">
+            <i class="far fa-star" aria-hidden="true"></i>
+        </button>
+
+        <button class="personal-btn btn">Personal</button>
+
+        <button class="private-btn btn"><i class="fas fa-briefcase private-btn-icon" aria-hidden="true"></i>Private
+        </button>
+
+    </div>
+
+    <button class="menu-btn btn"><i class="fas fa-ellipsis-h menu-btn-icon" aria-hidden="true"></i>Show Menu</button>
+
+</section>
+<!-- End of board info bar -->
+
+<!-- Lists container -->
+
+
+<section class="lists-container">
+    {% for column in board.column.all %}
+
+    <div class="list">
+
+        <h3 class="list-title">{{ column }}</h3>
+
+        <ul class="list-items">
+            {% for card in column.card.all %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'card-detail' card.pk %}">{{ card }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+
+        <a href="{% url 'card-add' %}">
+            <button class="add-list-btn btn" role="button">Add a card</button>
+        </a>
+        <a href="{% url 'column_delete' column.pk %}">delete</a>
+
+    </div>
+
+    {% endfor %}
+
+
+    <a href="{% url 'column-add' %}">
+        <button class="add-list-btn btn" role="button">Add a column</button>
+    </a>
+
+
+
+    <div id="favourite-section">
+                {% if is_favourite %}
+        <a href="{% url 'favourite_post' board.pk %}">
+            <i class="fa-regular fa-star fa-lg"></i>
+            remove
+        </a>
+                {% else %}
+
+                <a href="{% url 'favourite_post' board.pk %}">
+            <i class="fa-regular fa-star fa-lg"></i>
+                    add
+        </a>
+                {% endif %}
+    </div>
+
+    <div id="archive-section">
+                {% if is_archive %}
+        <a href="{% url 'archive_post' board.pk %}">
+            <button class="add-list-btn btn" role="button">remove from archive</button>
+        </a>
+
+        </a>
+                {% else %}
+
+                    <a href="{% url 'archive_post' board.pk %}">
+            <button class="add-list-btn btn" role="button">Add to archive</button>
+        </a>
+
+        </a>
+                {% endif %}
+    </div>
+
+
+</section>
+
+
+        {% endblock %}
+

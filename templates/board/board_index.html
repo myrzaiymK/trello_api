@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page_content %}
+
+<h1>Boards</h1>
+<!--<h1 class="title">Hover over the cards</h1>-->
+<link href="{% static 'board_index_css.css' %}" rel="stylesheet" type="text/css">
+<script src="{% static 'board_index_js.js' %}"></script>
+ <li class="nav-item">
+        <a class="nav-link" href="{% url 'board-add' %}">Create Board</a>
+    </li>
+
+<form action="{% url 'search_results' %}" method="get">
+  <input name="search" type="text" id="" class="form-control" placeholder="Search...">
+    <button class="btn-outline-secondary" type="submit">Search</button>
+</form>
+
+
+
+
+
+
+
+<div class="cards">
+    {% for board in boards %}
+    {% if board in archive_posts %}
+    {% else %}
+    <div class="card">
+        <div class="card__image-holder">
+            {% if board.image %}
+            <img class="card-img-top" src="{{ board.image.url }}">
+            {% endif %}
+        </div>
+        <div class="card-title">
+            <a href="{% url 'delete_board' board.pk %}" class="toggle-info btn">
+                <span class="left"></span>
+                <span class="right"></span>
+            </a>
+            <h2>
+                {{ board.title }}
+            </h2>
+            <div class="card-actions">
+                <a href="{% url 'board_detail' board.pk %}" class="btn">Open</a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+
+
+    {% endblock %}

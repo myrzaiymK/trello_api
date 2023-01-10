@@ -1,0 +1,28 @@
+<!--users/templates/registration/login.html-->
+
+{% extends 'base.html' %}
+{% block title %}Sign in{% endblock %}
+
+{% block content %}
+<h2>Login</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Login">
+</form>
+
+<a href="{% url 'dashboard' %}">Back to dashboard</a>
+<a href="{% url 'password_reset' %}">Reset password</a>
+<a href="{% url 'register' %}">Register</a>
+<div class="row">
+        <div class="col-md-8 mx-auto social-container my-2 order-md-1">
+            <button class="btn btn-primary mb-2">
+                <a href="{% url 'social:begin' 'google-oauth2' %}">Login With Google</a>
+            </button>
+        </div>
+    </div>
+
+{% endblock %}
+
+

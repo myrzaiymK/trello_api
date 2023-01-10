@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page_content %}
+
+<h1>Archive boards</h1>
+<link href="{% static 'board_index_css.css' %}" rel="stylesheet" type="text/css">
+<script src="{% static 'board_index_js.js' %}"></script>
+
+
+<div class="cards">
+{% for post in archive_posts %}
+  <div class="card">
+    <div class="card__image-holder">
+            {% if post.image %}
+            <img class="card-img-top" src="{{ post.image.url }}">
+            {% endif %}
+    </div>
+    <div class="card-title">
+      <a href="{% url 'delete_board' post.pk %}" class="toggle-info btn">
+        <span class="left"></span>
+        <span class="right"></span>
+      </a>
+
+      <h2>
+          {{ board.title }}
+      </h2>
+        <div class="card-actions">
+                <a href="{% url 'board_detail' post.pk %}" class="btn">Open</a>
+            </div>
+        <a href="{% url 'archive_post' post.pk %}">
+            <button class="add-list-btn btn" role="button">remove from archive</button>
+        </a>
+
+
+    </div>
+    <div class="card-flap flap1">
+
+      <div class="card-flap flap2">
+
+
+      </div>
+    </div>
+  </div>
+    {% empty %}
+
+    <h1>No archive boards</h1>
+
+    {% endfor %}
+
+{% endblock %}
+
